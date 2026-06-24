@@ -521,13 +521,11 @@ tr:hover td { background:#F8FAFC; }
 const PRI='#1A1F3D', ACC='#F97316';
 function showTab(t){
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.getAttribute('data-tab')===t));
-  document.querySelectorAll('.tab-page').forEach(p=>{if(p.id==='tab-'+t)p.classList.remove('hidden');else p.classList.add('hidden');});
+  var pages=document.querySelectorAll('.tab-page');
   if(t==='semua'){
-    const c=document.getElementById('tab-semua');
-    c.querySelectorAll('.cloned-section').forEach(e=>e.remove());
-    ['tab-marketing','tab-sales','tab-kompetitor','tab-konten','tab-target','tab-actionplan'].forEach(id=>{
-      const s=document.getElementById(id);if(s){const cl=s.cloneNode(true);cl.classList.add('cloned-section');cl.classList.remove('hidden');cl.removeAttribute('id');c.appendChild(cl);}
-    });
+    pages.forEach(p=>p.classList.remove('hidden'));
+  } else {
+    pages.forEach(p=>{p.classList.toggle('hidden',p.id!=='tab-'+t);});
   }
   setTimeout(function(){try{Object.values(Chart.instances||{}).forEach(function(c){try{c.resize();}catch(e){}});}catch(e){}},100);
 }
